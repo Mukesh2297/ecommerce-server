@@ -1,6 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongodb = require('mongodb');
+const dotenv = require('dotenv');
+const mongoConnect = require("./util/database").mongoConnect;
+
+dotenv.config();
+
 
 const feedRoutes = require('./routes/feed');
 
@@ -17,4 +23,6 @@ app.use(bodyParser.json());
 app.use(feedRoutes);
 
 
-app.listen(port, () => console.log(`Listening on port ${port} `));
+mongoConnect(()=>{
+    app.listen(port, () => console.log(`Listening on port ${port} `));
+})
